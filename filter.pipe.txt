@@ -1,0 +1,48 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'filter'
+})
+export class FilterPipe implements PipeTransform {
+  transform(value: any[], selectOption: string, searchText: string):any[] {
+
+    if (!value) return null;
+    if (!selectOption) return value;
+    if (!searchText) return value;    
+
+    let tempArr: any[] = [];
+
+    if (selectOption == "name") {
+
+      for (let index in value) {
+
+        if (value[index].name.toLowerCase().includes(searchText.toLowerCase())) {
+          tempArr.push(value[index]);
+        }
+
+      }
+    }
+    else if (selectOption == 'price') {
+      for (let index in value) {
+
+        if (value[index].price == searchText) {
+          tempArr.push(value[index]);
+        }
+      }
+    }
+    else if (selectOption == 'cardnumber') {
+      for (let index in value) {
+
+        if (value[index].cardnumber.toString().includes(searchText)) {
+          tempArr.push(value[index]);
+        }
+      }
+    }
+    return tempArr
+
+  }
+}
+
+
+
+

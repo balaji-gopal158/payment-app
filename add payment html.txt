@@ -1,0 +1,62 @@
+<div class="container" >
+    <h2 class="text-center">Add payment</h2> <br>
+    <form (submit)="doSubmit(f)" #f="ngForm">
+
+        <div class="col-md-4">
+            <div>
+                <label>Name:</label>
+                <input type="text" class="form-control" name="name" ngModel  #username='ngModel'
+                    [(ngModel)]="userName" placeholder="Enter Name" required minlength="4">
+                    <!-- {{username.errors | json}} -->
+                    {{userName}}
+                <p class="alert alert-danger" *ngIf="username.touched && username.errors?.['required']">
+                    Please enter user name
+                </p>
+                <p class="alert alert-danger" *ngIf="username.touched && username.errors?.['minlength']">
+                    Please enter minimmum 4characters
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div>
+                <label>Price:</label>
+                <input type="number" class="form-control" name="price" ngModel required #rate='ngModel'
+                    [(ngModel)]="userPrice" placeholder="Enter Price" required>
+                <p class="alert alert-danger" *ngIf="rate.touched && rate.errors?.['required']">
+                    Please enter price
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div>
+                <label>Card Number:</label>
+                <input type="text" class="form-control" appCardNum [cardNoIp]="'ip'" #ncard="ngModel" name="cardnumber" ngModel required
+                    [(ngModel)]="userCardNumber" pattern="^4[0-9]{12}(?:[0-9]{3})?$" placeholder="xxxx-xxxx-xxxx-xxxx">
+                <p class="alert alert-danger" *ngIf="ncard.touched && ncard.errors?.['required']">
+                    Please enter your creditcard number
+                </p>
+            </div> <br>
+            <!-- card type image -->
+            <img src="{{userCardNumber|cardimage}}"><br><br>
+            <!-- card type image end-->
+        </div>
+     <br><br>
+
+
+
+  
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary" [disabled]="userName.length==0 || 
+        userPrice.length==0 || userCardNumber.length==0">Add payment</button>&nbsp;
+
+        <button class="btn btn-danger" (click)="clearDetails()">Clear</button> <br><br>
+    </div>
+</form>
+    <hr>
+
+
+    <app-listpayment></app-listpayment>
+</div>

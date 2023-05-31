@@ -1,0 +1,43 @@
+import { Injectable } from "@angular/core";
+
+@Injectable({
+    providedIn: "root"
+})
+
+export class amountService {
+
+    paymentDetails = [{ name: "raja", price: 1000, cardnumber: 4787694678034689 },
+    { name: "gopi", price: 1500, cardnumber: 8907463487144387 },
+    { name: "ragu", price: 2000, cardnumber: 7677646488689743 }];
+
+
+    constructor() {
+
+    }
+
+    showPaymentDetails() {
+        return this.paymentDetails;
+    }
+
+    createPaymentDetails(payDet: any) {
+        this.paymentDetails.push(payDet)
+
+        // this.paymentDetails.push({ name: par1, price: par2, cardnumber: par3 })
+        
+    }
+
+    deleteList(index: number) {
+
+        if (confirm("Are you sure want to delete this?")) {
+            this.paymentDetails.splice(index, 1)
+
+        }
+    }
+
+    updatePaymentList(index: any, editName: any, editPrice: any, editCardNo: any) {
+        this.paymentDetails[index].name = editName;
+        this.paymentDetails[index].price = editPrice;
+        this.paymentDetails[index].cardnumber = editCardNo;
+    }
+
+}

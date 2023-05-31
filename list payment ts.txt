@@ -1,0 +1,57 @@
+import { Component, OnInit } from '@angular/core';
+import { amountService } from 'src/app/payment.service';
+
+@Component({
+  selector: 'app-listpayment',
+  templateUrl: './listpayment.component.html',
+  styleUrls: ['./listpayment.component.css']
+})
+
+export class ListpaymentComponent implements OnInit {
+
+  // payments: { name: string, price: any, cardnumber: any }[] = [];
+  payments: any = [];
+
+  isCreate = false;
+  
+  editName: string = "";
+  editPrice: any;
+  editCardNumber: any;
+  indexNo: number;
+
+
+  selectOption = "";
+  searchText = "";
+
+  constructor(public ps1: amountService) {
+
+    this.payments = this.ps1.showPaymentDetails()
+
+  }
+  ngOnInit(): void {
+  }
+
+  editList(index: any) {
+    console.log(this.payments);
+    
+    this.isCreate = true;
+    this.indexNo = index;
+
+    this.editName = this.payments[this.indexNo].name;
+    this.editPrice = this.payments[this.indexNo].price;
+    this.editCardNumber = this.payments[this.indexNo].cardnumber;
+
+  }
+  updateList() {
+    this.isCreate = false;
+    this.ps1.updatePaymentList(this.indexNo, this.editName, this.editPrice, this.editCardNumber)
+  }
+
+  deleList(indexNo: any) {
+
+    this.ps1.deleteList(indexNo);
+    
+  }
+
+
+}

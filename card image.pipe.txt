@@ -1,0 +1,28 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'cardimage'
+})
+export class CardimagePipe implements PipeTransform {
+
+  transform(cardNo:any)
+  {
+    if (!cardNo) return null;
+
+    let imageUrl= "";    
+
+    if(cardNo.toString().length>=2)
+    {
+      if(cardNo.toString().slice(0,2)>=50)
+      {
+        imageUrl="../../assets/master.jpg";
+      }
+      else
+      {
+        imageUrl="../../assets/visa.jpg";
+      }
+    }
+   return imageUrl;
+}
+
+}

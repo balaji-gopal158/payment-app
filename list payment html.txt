@@ -1,0 +1,86 @@
+<!-- search section -->
+<div  >
+  <div class="col-md-6">
+  <select  [(ngModel)]="selectOption" class="form-control">
+    {{selectOption}}
+    <option value="" class="text-center">Select Options</option>
+    <option value="name" class="text-center">Name</option>
+    <option value="price" class="text-center">Price</option>
+    <option value="cardnumber" class="text-center">Card No</option>
+    </select>
+  </div>
+    <div class="col-md-6">
+      <div>
+        <input type="text" class="form-control"  placeholder="Serach" [(ngModel)]="searchText" 
+        [disabled]="selectOption == '' ">
+      </div>
+    </div> 
+    <br><br>
+</div>
+<!-- search section ends -->
+
+<hr> 
+<h2>List Payment</h2> <br>
+ 
+<!-- Edit box Section -->
+
+<div [hidden]="!isCreate">
+  <div class="col-md-4">
+    <div>
+      <label>Name:</label>
+      <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="editName">
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div>
+      <label>Price:</label>
+      <input type="number" class="form-control"  placeholder="Enter Price" [(ngModel)]="editPrice">
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div>
+      <label>Card Number:</label>
+      <input type="number" class="form-control"   placeholder="Enter Card Number" [(ngModel)]="editCardNumber" pattern="[0-9]{16}">
+    </div> <br>
+  </div>
+
+  <div class="text-center" >
+    <button class="btn btn-primary" (click)="updateList()" >Update</button> &nbsp;
+   
+  </div> <br>
+
+</div>
+<!-- Edit box Section Ends -->
+
+<p class="text-center" *ngIf="selectOption== '' ">No of Records:{{payments.length}}</p>
+
+<!-- payment list section -->
+
+<table class="table table-dark bg-success p-2">
+  <thead>
+    <tr>
+      <th scope="col">S.No</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Card Number</th>
+      <th scope="col">Operations</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr *ngFor="let table of payments|filter:selectOption:searchText;index as i">
+      <td>{{i+1}} </td>
+      <td>{{table.name| titlecase}}</td>
+      <td>{{table.price| currency:"INR"}}</td>
+      <td>{{table.cardnumber|maskcard}}</td>
+      <td><button class="btn btn-success" (click)="editList(i)">Edit</button> &nbsp;
+        <button class="btn btn-danger" (click)=" deleList(i)">Delete</button>
+</td>
+
+    </tr>
+  </tbody>
+</table>
+<!-- payment list section End -->

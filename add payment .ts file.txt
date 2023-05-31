@@ -1,0 +1,48 @@
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { amountService } from '../payment.service';
+
+@Component({
+  selector: 'app-addpayment',
+  templateUrl: './addpayment.component.html',
+  styleUrls: ['./addpayment.component.css']
+})
+export class AddpaymentComponent implements OnInit {
+  userName: string = "";
+  userPrice: any;
+  userCardNumber: any;
+
+  isCreate: boolean = false;
+
+  constructor(public ps1: amountService) {
+
+  }
+
+  ngOnInit(): void {
+  }
+
+  /*createPayment() {
+    console.log(this.userCardNumber.replace(/\D/g, ""));
+    console.log(this.userCardNumber.replace(/\D$/, ""));
+
+    this.ps1.createPaymentDetails(this.userName, this.userPrice, this.userCardNumber.replace(/\D/g, ""));
+
+  }*/
+
+  clearDetails() {
+    this.userName = "";
+    this.userPrice = "";
+    this.userCardNumber = "";
+  }
+
+  doSubmit(form: NgForm) {
+    let obj = form.value;
+    obj.cardnumber = obj.cardnumber.replace(/\D/g, "");
+
+    this.ps1.createPaymentDetails(obj);
+
+  }
+}
+
+
+
